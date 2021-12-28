@@ -3,6 +3,16 @@
 
 int main()
 {
+	while (true) {
+		std::cout << "몇 단을 출력할까요? ";
+		int num;
+		std::cin >> num;
+
+		std::cout << "구구단 " << num << "단입니다\n";
+		for (int i = 1; i <= 9; ++i) {
+			std::cout << num << " * " << i << " = " << num * i << '\n';
+		}
+	}
 
 	save("week02-1.cpp");
 }

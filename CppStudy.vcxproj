@@ -156,7 +156,9 @@
     <ClCompile Include="week01-5.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="week01-6.cpp" />
+    <ClCompile Include="week01-6.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="week02-1.cpp" />
   </ItemGroup>
   <ItemGroup>
