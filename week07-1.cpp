@@ -4,18 +4,19 @@
 #include <iomanip>
 using namespace std;
 
-int arr[100'000'000];
-
 int main()
 {
+	int* arr = new int[100'000'000];
+
 	ifstream in{ "정수 1억개.txt" };
 
 	int num;
 	int cnt{ };
-	
+
 	cout << "정수를 읽는 중";
 	while (in >> num) {
-		arr[cnt++] = num;
+		//arr[cnt++] = num;
+		*(arr + cnt++) = num;
 		if (!(cnt % 1'000'000)) {
 			cout << ".";
 		}
@@ -26,11 +27,11 @@ int main()
 
 	cout << "정렬하는 중";
 	cnt = 0;
-	sort(begin(arr), end(arr), [&cnt](int a, int b) {
+	sort(arr, arr + 100'000'000, [&cnt](int a, int b) {
 		if (!(++cnt % 1'000'000)) {
 			cout << ".";
 		}
-		return a < b; 
+		return a < b;
 		} );
 	cout << endl;
 
@@ -45,4 +46,4 @@ int main()
 // 3. 정렬된 정수 중 앞에서 1천개를 화면에 출력하라
 
 
-// 람다 캡처
+// 전역 메모리가 아닌 동적 메모리를 이용하라
