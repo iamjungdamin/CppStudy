@@ -2,6 +2,7 @@
 #include <string>
 #include <random>
 #include <fstream>
+#include <algorithm>
 using namespace std;
 
 default_random_engine dre;
@@ -25,7 +26,16 @@ public:
 		cout << id << " - " << name << endl;
 	}
 
+	int getID() const {
+		return id;
+	}
+
+	string_view getName() const {
+		return name;
+	}
+
 	friend ostream& operator<<(ostream&, const Dog&);
+	friend istream& operator>>(istream&, Dog&);
 };
 
 ostream& operator<<(ostream& os, const Dog& dog) {
@@ -33,14 +43,54 @@ ostream& operator<<(ostream& os, const Dog& dog) {
 	return os;
 }
 
+istream& operator>>(istream& is, Dog& dog) {
+	is >> dog.id >> dog.name;
+	return is;
+}
+
 int main()
 {
-	ofstream out("Dog만개");
+	ifstream in("Dog만개");
+
+	if (!in) {
+		cout << "파일을 열지 못했습니다" << endl;
+		exit(-1234);
+	}
+
+	Dog* dogs = new Dog[10000];
+
+	cout << "파일에서 읽는 중" << endl;
+	int i = 0;
+	while (in >> dogs[i++]) {
+		;
+	}
+
+	cout << "정렬하는 중" << endl;
+	sort(&dogs[0], &dogs[10000], [](const Dog& a, const Dog& b) {
+		return a.getName().size() < b.getName().size();
+		} );
+
+	cout << "정렬이 끝났습니다. 아무 키나 누르세요 ";
+	char ch;
+	cin >> ch;
 
 	for (int i = 0; i < 10'000; ++i) {
-		Dog dog;
-		out << dog << endl;
+		cout << dogs[i] << endl;
 	}
+
+	cout << "정렬하는 중" << endl;
+	sort(&dogs[0], &dogs[10000], [](const Dog& a, const Dog& b) {
+		return a.getID() < b.getID();
+		});
+
+	cout << "정렬이 끝났습니다. 아무 키나 누르세요 ";
+	cin >> ch;
+
+	for (int i = 0; i < 10'000; ++i) {
+		cout << dogs[i] << endl;
+	}
+
+	delete[] dogs;
 }
 
 
@@ -49,4 +99,12 @@ int main()
 
 // 2. Dog 객체 10000개를 파일 "Dog만개"에 저장한다
 
+
+// 3. "Dog만개"에 있는 Dog 객체의 정보를 모두 읽는다
+
+
+// 4. 이름 길이 오름차순으로 정렬한 후 화면에 출력한다
+
+
+// 5. id 오름차순으로 정렬한 후 화면에 출력한다
 
